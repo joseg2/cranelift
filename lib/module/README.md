@@ -1,3 +1,6 @@
+Cretonne has been renamed to Cranelift! For future versions, see the
+[`cranelift-module`](https://crates.io/crates/cranelift-module) crate.
+
 This crate provides the `Module` trait, which provides an interface for
 multiple functions and data to be emitted with
 [Cretonne](https://crates.io/crates/cretonne) and then linked together.

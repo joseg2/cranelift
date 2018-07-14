@@ -1,3 +1,6 @@
+Cretonne has been renamed to Cranelift! For future versions, see the
+[`cranelift-frontend`](https://crates.io/crates/cranelift-frontend) crate.
+
 This crate provides a straightforward way to create a
 [Cretonne](https://crates.io/crates/cretonne) IR function and fill it with
 instructions translated from another language. It contains an SSA construction
