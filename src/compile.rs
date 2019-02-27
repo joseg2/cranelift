@@ -1,5 +1,7 @@
 //! CLI tool to read Cranelift IR files and compile them into native code.
 
+use crate::utils::{parse_sets_and_triple, read_to_string};
+use cfg_if::cfg_if;
 use cranelift_codegen::isa::TargetIsa;
 use cranelift_codegen::print_errors::pretty_error;
 use cranelift_codegen::settings::FlagsOrIsa;
@@ -9,7 +11,6 @@ use cranelift_codegen::{binemit, ir};
 use cranelift_reader::parse_test;
 use std::path::Path;
 use std::path::PathBuf;
-use utils::{parse_sets_and_triple, read_to_string};
 
 struct PrintRelocs {
     flag_print: bool,
@@ -110,9 +111,7 @@ fn handle_module(
             .compile(isa)
             .map_err(|err| pretty_error(&context.func, Some(isa), err))?;
 
-        let mut mem = Vec::new();
-        mem.resize(total_size as usize, 0);
-
+        let mut mem = vec![0; total_size as usize];
         let mut relocs = PrintRelocs { flag_print };
         let mut traps = PrintTraps { flag_print };
         let mut code_sink: binemit::MemoryCodeSink;

@@ -7,9 +7,10 @@ representation](https://cranelift.readthedocs.io/en/latest/ir.html)
 into executable machine code.
 
 [![Documentation Status](https://readthedocs.org/projects/cranelift/badge/?version=latest)](https://cranelift.readthedocs.io/en/latest/?badge=latest)
-[![Build Status](https://travis-ci.org/CraneStation/cranelift.svg?branch=master)](https://travis-ci.org/CraneStation/cranelift)
+[![Travis Status](https://travis-ci.org/CraneStation/cranelift.svg?branch=master)](https://travis-ci.org/CraneStation/cranelift)
+[![Appveyor Status](https://ci.appveyor.com/api/projects/status/oub7wrrb59utuv8x?svg=true)](https://ci.appveyor.com/project/CraneStation/cranelift)
 [![Gitter chat](https://badges.gitter.im/CraneStation/CraneStation.svg)](https://gitter.im/CraneStation/Lobby)
-![Minimum rustc 1.29](https://img.shields.io/badge/rustc-1.29+-red.svg)
+![Minimum rustc 1.31](https://img.shields.io/badge/rustc-1.31+-green.svg)
 
 For more information, see [the
 documentation](https://cranelift.readthedocs.io/en/latest/?badge=latest).
@@ -18,6 +19,11 @@ For an example of how to use the JIT, see the [SimpleJIT Demo], which
 implements a toy language.
 
 [SimpleJIT Demo]: https://github.com/CraneStation/simplejit-demo
+
+For an example of how to use Cranelift to run WebAssembly code, see
+[Wasmtime], which implements a standalone, embeddable, VM using Cranelift.
+
+[Wasmtime]: https://github.com/CraneStation/wasmtime
 
 Status
 ------
@@ -47,7 +53,7 @@ needed before it would be ready for a production use case.
 
 Cranelift's APIs are not yet stable.
 
-Cranelift currently requires Rust 1.29 or later, and Python 2.7 or 3
+Cranelift currently requires Rust 1.30 or later, and Python 2.7 or 3
 to build.
 
 Planned uses
@@ -62,6 +68,7 @@ affected its design are:
  - [Backend for the IonMonkey JavaScript JIT compiler in
     Firefox](spidermonkey.md#phase-2-ionmonkey).
  - [Debug build backend for the Rust compiler](rustc.md).
+ - [Wasmtime non-Web wasm engine](https://github.com/CraneStation/wasmtime).
 
 Building Cranelift
 ------------------
@@ -70,7 +77,7 @@ Cranelift uses a [conventional Cargo build
 process](https://doc.rust-lang.org/cargo/guide/working-on-an-existing-project.html).
 
 Cranelift consists of a collection of crates, and uses a [Cargo
-Workspace](https://doc.rust-lang.org/book/second-edition/ch14-03-cargo-workspaces.html),
+Workspace](https://doc.rust-lang.org/book/ch14-03-cargo-workspaces.html),
 so for some cargo commands, such as `cargo test`, the `--all` is needed
 to tell cargo to visit all of the crates.
 
@@ -88,7 +95,7 @@ The following crates support \`no\_std\`, although they do depend on liballoc:
  - cranelift-native
  - cranelift-wasm
  - cranelift-module
- - cranelift-simplejit
+ - cranelift-preopt
  - cranelift
 
 To use no\_std mode, disable the std feature and enable the core
@@ -97,7 +104,7 @@ feature. This currently requires nightly rust.
 For example, to build \`cranelift-codegen\`:
 
 ``` {.sourceCode .sh}
-cd lib/codegen
+cd cranelift-codegen
 cargo build --no-default-features --features core
 ```
 
@@ -158,3 +165,10 @@ generator](http://www.sphinx-doc.org/) as well as Python 3::
     $ open _build/html/index.html
 
 </details>
+
+Editor Support
+--------------
+
+Editor support for working with Cranelift IR (clif) files:
+
+ - Vim: https://github.com/CraneStation/cranelift.vim

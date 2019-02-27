@@ -9,13 +9,13 @@ topdir=$(dirname "$0")
 cd "$topdir"
 
 # All the cranelift-* crates have the same version number
-version="0.22.0"
+version="0.28.0"
 
 # Update all of the Cargo.toml files.
 #
 # The main Cargo.toml in the top-level directory is the cranelift-tools crate which we don't publish.
 echo "Updating crate versions to $version"
-for crate in . lib/* lib/codegen/meta; do
+for crate in . cranelift-* cranelift-codegen/meta; do
     # Update the version number of this crate to $version.
     sed -i.bk -e "s/^version = .*/version = \"$version\"/" \
         "$crate/Cargo.toml"
@@ -37,8 +37,9 @@ echo git commit -a -m "\"Bump version to $version"\"
 echo git push
 for crate in \
     entity bforest codegen/meta codegen frontend native \
+    preopt \
     reader wasm module \
     faerie umbrella simplejit
 do
-    echo cargo publish --manifest-path "lib/$crate/Cargo.toml"
+    echo cargo publish --manifest-path "$crate/Cargo.toml"
 done
